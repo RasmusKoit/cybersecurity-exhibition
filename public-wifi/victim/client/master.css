@@ -129,7 +129,7 @@ p{
     color: #DCDFDE;
 }
 
-input[type=text]{
+input[type=text],input[type=password]{
     width: 46rem;
     margin: 1rem;
     padding: 1rem;

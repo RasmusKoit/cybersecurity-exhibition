@@ -2,8 +2,9 @@ import Router from 'koa-router';
 
 const router = new Router();
 
-router.get('/api/test', (ctx, next) => {
-  ctx.body = 'test';
+router.post('/api/user', (ctx, next) => {
+  // ctx.body='hello'
+  ctx.redirect('/');
 });
  
 export default router;
