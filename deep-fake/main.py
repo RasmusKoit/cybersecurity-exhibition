@@ -35,7 +35,7 @@ def make_app():
       img1 = cv2.imread('./deep-fake/images/lauristin.jpg')
       npimg = numpy.fromstring(base64.b64decode(request.data.split(',')[1]), dtype=numpy.uint8)
       img2 = cv2.imdecode(npimg, 1)
-  
+
       output1, output2 = face_swap2(img2,img1, detector, predictor)
       img = Image.fromarray(cv2.cvtColor(output1, cv2.COLOR_BGR2RGB), mode='RGB')
 

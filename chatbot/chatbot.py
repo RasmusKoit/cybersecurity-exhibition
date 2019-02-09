@@ -36,9 +36,6 @@ with open('intents.json') as json_data:
     intents = json.load(json_data)
 
 
-# In[74]:
-
-
 # Build neural network
 net = tflearn.input_data(shape=[None, len(train_x[0])])
 net = tflearn.fully_connected(net, 8)
@@ -75,18 +72,6 @@ def bow(sentence, words, show_details=False):
 
     return(np.array(bag))
 
-
-# In[76]:
-
-
-p = bow("is your shop open today?", words)
-print (p)
-print (classes)
-
-
-# In[77]:
-
-
 # load our saved model
 
 model.load('./model.tflearn')
@@ -96,9 +81,10 @@ model.load('./model.tflearn')
 
 
 # create a data structure to hold user context
+# create a data structure to hold user context
 context = {}
 
-ERROR_THRESHOLD = 0.25
+ERROR_THRESHOLD = 0.05
 def classify(sentence):
     # generate probabilities from the model
     results = model.predict([bow(sentence, words)])[0]
@@ -117,14 +103,26 @@ def response(sentence, userID='123', show_details=False):
     print(results)
     # if we have a classification then find the matching intent tag
     
+    
+    
     if (userID in context and context[userID] is not None):
+        for j in results:
+            for i in intents["intents"]:
+                if i['tag'] == j[0] and 'context_filter' in i and i["context_filter"] == context[userID]:
+                    if ('context_set' in i):
+                        context[userID] = i['context_set']
+                    else:
+                        context[userID] = None
+                    return random.choice(i["responses"])
+                    
+        
         for i in intents['intents']:
             if ('context_filter' in i and i["context_filter"] == context[userID]):
                 if ('context_set' in i):
                     context[userID] = i['context_set']
                 else:
                     context[userID] = None
-                return random.choice(i["responses"]);
+                return random.choice(i["responses"])
     
     if results:
         # loop as long as there are matches to process
@@ -152,87 +150,6 @@ def response(sentence, userID='123', show_details=False):
                         context[userID] = i['context_set']
 
             results.pop(0)
-
-
-# In[81]:
-
-
-classify('tere')
-
-
-# In[83]:
-
-
-response('tere')
-
-
-# In[15]:
-
-
-response('do you take cash?')
-
-
-# In[16]:
-
-
-response('what kind of mopeds do you rent?')
-
-
-# In[17]:
-
-
-response('Goodbye, see you later')
-
-
-# In[13]:
-
-
-context
-
-
-# In[18]:
-
-
-response('we want to rent a moped')
-
-
-# In[19]:
-
-
-# show context
-context
-
-
-# In[20]:
-
-
-response('today')
-
-
-# In[21]:
-
-
-classify('today')
-
-
-# In[22]:
-
-
-# clear context
-response("Hi there!", show_details=True)
-
-
-# In[23]:
-
-
-response('today')
-classify('today')
-
-
-# In[24]:
-
-
-response("thanks, your great")
 
 app = Flask(__name__)
 def make_app():
