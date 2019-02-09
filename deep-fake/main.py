@@ -5,6 +5,7 @@ from utils import face_swap2
 from PIL import Image
 import dlib
 import cv2
+import os
 from io import BytesIO
 import base64
 import numpy
@@ -32,12 +33,9 @@ def make_app():
       request.accept_mimetypes['text/plain']
 
       img1 = cv2.imread('./deep-fake/images/lauristin.jpg')
-      bluh = base64.b64decode(request.data); 
-      npimg = numpy.fromstring(bluh, dtype=numpy.uint8)
-      print(npimg)
+      npimg = numpy.fromstring(base64.b64decode(request.data.split(',')[1]), dtype=numpy.uint8)
       img2 = cv2.imdecode(npimg, 1)
-      print(img2)
-
+  
       output1, output2 = face_swap2(img2,img1, detector, predictor)
       img = Image.fromarray(cv2.cvtColor(output1, cv2.COLOR_BGR2RGB), mode='RGB')
 
