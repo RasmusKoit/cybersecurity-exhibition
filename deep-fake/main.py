@@ -31,28 +31,27 @@ def make_app():
     @app.route('/api/image', methods = ['POST'])
     def imageUploader():
       request.accept_mimetypes['text/plain']
-
-      npimg = numpy.fromstring(base64.b64decode(request.data.split(',')[1]), dtype=numpy.uint8)
-      img2 = cv2.imdecode(npimg, 1)
-
-      directory = './deep-fake/images/'
-      images = []
-      for filename in os.listdir(directory):
-        img1 = cv2.imread(os.path.join(directory, filename))
-        output1, output2 = face_swap2(img2,img1, detector, predictor)
-        img = Image.fromarray(cv2.cvtColor(output1, cv2.COLOR_BGR2RGB), mode='RGB')
-
-        buffer = BytesIO()
-        img.save(buffer,format="JPEG")                 
-        myimage = buffer.getvalue()  
-        
-        result = 'data:image/jpg;base64,' + base64.b64encode(myimage)
-        images.append(result)
-  
       try:
+        npimg = numpy.fromstring(base64.b64decode(request.data.split(',')[1]), dtype=numpy.uint8)
+        img2 = cv2.imdecode(npimg, 1)
+
+        directory = './deep-fake/images/'
+        images = []
+        for filename in os.listdir(directory):
+          img1 = cv2.imread(os.path.join(directory, filename))
+          output1, output2 = face_swap2(img2,img1, detector, predictor)
+          img = Image.fromarray(cv2.cvtColor(output1, cv2.COLOR_BGR2RGB), mode='RGB')
+
+          buffer = BytesIO()
+          img.save(buffer,format="JPEG")                 
+          myimage = buffer.getvalue()  
+          
+          result = 'data:image/jpg;base64,' + base64.b64encode(myimage)
+          images.append(result)
+    
         return jsonify(images)
       except:
-        return json.dumps({ 'message': 'Something went wrong in the server' }), 500
+        return json.dumps({ 'message': 'Something went wrong in the server' }), 422
 
     @app.route('/api/image')
     def getImage():
