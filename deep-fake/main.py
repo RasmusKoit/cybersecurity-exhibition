@@ -1,7 +1,21 @@
 
 import json
 from flask import Flask, render_template, request, jsonify, render_template_string
+from utils import face_swap2
+from PIL import Image
+import dlib
+import cv2
+from io import BytesIO
+import base64
+import numpy
 
+model = './deep-fake/shape_predictor_68_face_landmarks.dat'
+detector = dlib.get_frontal_face_detector()
+predictor = dlib.shape_predictor(model)
+
+def stringToImage(base64_string):
+    imgdata = base64.b64decode(base64_string)
+    return Image.open(BytesIO(imgdata))
 
 app = Flask(__name__)
 
@@ -16,12 +30,24 @@ def make_app():
     @app.route('/api/image', methods = ['POST'])
     def imageUploader():
       request.accept_mimetypes['text/plain']
-      f = open('./deep-fake/temp/hello.jpg', 'w')
-      f.write(request.data)
-      print(request.data)
+
+      img1 = cv2.imread('./deep-fake/images/lauristin.jpg')
+      bluh = base64.b64decode(request.data); 
+      npimg = numpy.fromstring(bluh, dtype=numpy.uint8)
+      print(npimg)
+      img2 = cv2.imdecode(npimg, 1)
+      print(img2)
+
+      output1, output2 = face_swap2(img2,img1, detector, predictor)
+      img = Image.fromarray(cv2.cvtColor(output1, cv2.COLOR_BGR2RGB), mode='RGB')
+
+      buffer = BytesIO()
+      img.save(buffer,format="JPEG")                 
+      myimage = buffer.getvalue()  
+      
+      result = 'data:image/jpg;base64,' + base64.b64encode(myimage)
       try:
-        result = 'uks kaks kolm'
-        return jsonify(result)
+        return result
       except:
         return json.dumps({ 'message': 'Something went wrong in the server' }), 500
 
@@ -32,6 +58,7 @@ def make_app():
       return f.read()
 
     return app
+
 
 if __name__ == '__main__':
   app = make_app()

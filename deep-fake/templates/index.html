@@ -114,6 +114,7 @@ h1{
                     <input id="upload" onchange="fileUploaded(event)" class="file-upload__input" type="file" name="upload">
                 </div>
             </div>
+            <img id="hello-world" src=""></img>
         </main>
     <script>
         document.getElementById('upload-text').innerText = document.getElementById('upload-text').innerText.toLocaleUpperCase();
@@ -124,7 +125,7 @@ h1{
             var reader  = new FileReader();
 
             reader.addEventListener("load", async function () {
-                await fetch('/api/image', {
+                const result =  await fetch('/api/image', {
                     method: 'POST',
                     body: reader.result,
                     headers: new Headers({
@@ -132,7 +133,10 @@ h1{
                     })
                 });
 
+                const base64 = await result.text();
+
                 document.getElementById('not-upload').style.display = 'none';
+                document.getElementById('hello-world').src = base64;
             }, false);
 
             if (file) {
