@@ -24,6 +24,9 @@ switch (appName) {
         break;
     }
     break;
+  case 'CHATBOT':
+    app.use(serve('./chatbot/victim/client'));
+    app.use(chatbot.routes()).use(chatbot.allowedMethods())
   default:
     break;
 }
