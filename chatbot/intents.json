@@ -1,0 +1,68 @@
+{"intents": [
+    {"tag": "name",
+        "patterns": ["Tere", "Hei", "Tsau", "Tsauki"],
+        "responses": ["Tere, mis su nimi on? 😀😀😀"],
+        "context_set": "name"
+       },	
+       {"tag": "age_neg",
+        "context_filter": "name",
+        "context_set": "age",
+        "patterns":  ["Ei ütle", "Ei"],
+        "positive": false,
+        "responses": ["Igastahes, ma olen Mari ja olen 14-aastane. Kui vana sa oled?", "💩 Kahju! Ma olen Martin, 13. Vana sa?", "Okei, Ma olen Kadri, kohe saan 12. Kui vana sa praegu oled?"]
+       },
+       {"tag": "age_pos",
+        "context_filter": "name",
+        "context_set": "age",
+        "patterns":  ["Olen", "Minu nimi", " "],
+        "positive": true,
+        "responses": ["Rõõm tutvuda, ma olen Mari ja olen 14-aastane. Kui vana sa oled?", "😀 Tore! Ma olen Martin, 13. Vana sa?", "Ma olen Kadri, kohe saan 12. Kui vana sa praegu oled?"]
+       },		
+    {"tag": "home",
+        "patterns":  ["Ei ütle", "Ei"],
+        "context_filter": "age",
+        "context_set": "home",
+        "responses": ["Okei! Mul on kodus koer ja me elame perega Viimsis suures majas. Kus sa elad?", "Lahe! Mul on kodus kass ja ma elan ühes korteris Mustamäel. Kus sa elad?"]
+       },	
+       {"tag": "location",
+        "patterns": ["Ei ütle","Majas", "Korteris"],
+        "context_filter": "home",
+        "context_set": "home_addr",
+        "responses":  ["Okei! Kus su kodu muidu asub?", "Olgu, aga kus su kodu asub?"] 
+     },
+       {"tag": "pets",
+        "patterns": ["Ei ütle", "Tallinnas", "Tallinna lähedal", "Mujal"],
+        "context_filter": "home_addr",
+        "context_set": "pet",
+        "responses": ["Okei 😂 Kas sul ka lemmikloomi on?", "Olgu, kuule, kas sul ka mõni lemmikloom on?"]  
+       },
+       {"tag": "youtube",
+        "context_filter": "pet",
+        "context_set": "youtube",
+        "patterns": ["On küll", "Ei ole", "Ei ütle"],
+        "responses": ["Tead, mul on üks hästi lahe YouTube’i konto, ma panen sinna iga nädal ühe video üles. Kas sul ka seal konto on? Anna oma kasutajanimi ja ma Subscriben!"]
+       },
+       {"tag": "subscribe",
+        "context_filter": "youtube",
+        "context_set": "facebook",
+        "patterns": ["On küll", "Ei ole", "Ei ütle"],
+        "responses": ["Okei! Kuule, mis su Facebook on? Ma tahaks sind sõbraks lisada!"]
+       },
+       {"tag": "facebook",
+        "patterns": [ "Ei ole", "Ei ütle"],
+        "context_filter": "facebook",
+        "context_set": "class",
+        "responses": ["Ok 😂 Kuule, mis klassis sa käisidki?"]
+       },
+    {"tag": "grade",
+        "patterns": ["Ei ütle", "4", "5", "6", "7"],
+        "context_filter": "class",
+        "responses": ["Ok 😂 ! Kuule, ma pean praegu minema, räägime teine kord uuesti! Tsau!"]
+       },
+    {"tag": "goodbye",
+        "patterns": ["Head aega!", "Nägemist!", "Tsau!"],
+        "context_filter": "bye",
+        "responses": ["Nägemist"]
+       }
+    ]}
+    

@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/salts/cybersecurity-exhibition/chatbot/model.tflearn"
+all_model_checkpoint_paths: "/home/salts/cybersecurity-exhibition/chatbot/model.tflearn"
