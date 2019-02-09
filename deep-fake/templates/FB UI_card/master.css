@@ -30,9 +30,11 @@ a{
 
 header a{
     font-weight: bold;
+    color: #385D97;
 }
 
 header p{
+    color: #989797;
     font-size: 0.8rem;
 }
 
@@ -57,7 +59,7 @@ header p{
 }
 
 .like{
-    color: blue;
+    color: #446CB0;
     font-size: 1.6rem;
 }
 
