@@ -4,11 +4,12 @@
         <meta charset="utf-8">
         <title>Deep Fake</title>
         <style>
-        html {
+        html, body {
    font-family: 'helvetica neue', 'arial', sans-serif;
    padding: 0;
    margin: 0;
 }
+
 
 main{
     max-width: 80rem;
@@ -19,10 +20,12 @@ h1{
     font-size: 4rem;
 }
 
-.upload{
-    padding: 2rem;
-    border-right: 1px solid #909090;
-    width: 40rem;
+.upload {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .result{
@@ -39,10 +42,13 @@ h1{
   display: block;
   padding: 1em 2em;
   color: #fff;
-  background: #222;
+  background: rgb(0, 99, 8);
   border-radius: .4em;
   transition: background .3s;
   cursor: pointer;
+  max-width: 200px;
+  text-align: center;
+  font-weight: bold;
 
   /* &:hover {
      cursor: pointer;
@@ -62,26 +68,76 @@ h1{
     height: 100%;
     opacity: 0;
 }
+
+.lds-circle {
+  display: inline-block;
+  transform: translateZ(1px);
+}
+.lds-circle > div {
+  display: inline-block;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border-radius: 50%;
+  background: #fff;
+  animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+@keyframes lds-circle {
+  0%, 100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(1800deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
+  100% {
+    transform: rotateY(3600deg);
+  }
+}
+
     </style>
     </head>
     <body>
         <main>
-            <section class="upload">
-                <h1>Deep Fake Presentation</h1>
+            <div id="not-upload" class="upload">
                 <div class="file-upload">
-                    <label for="upload" class="file-upload__label">File upload</label>
-                    <input id="upload" onchange="fileUploaded()" class="file-upload__input" type="file" name="upload">
+                    <label
+                        for="upload"
+                        class="file-upload__label"
+                    >
+                        <span id="upload-text">Upload image to apply military filters</span>
+                        <div style="display:none" id="upload-loader" class="lds-circle"><div></div></div>
+                    </label>
+                    <input id="upload" onchange="fileUploaded(event)" class="file-upload__input" type="file" name="upload">
                 </div>
-            </section>
-            <section class="result">
-                <h1>Result</h1>
-                <div class="DeepFakeResult">
-                </div>
-            </section>
+            </div>
         </main>
     <script>
+        document.getElementById('upload-text').innerText = document.getElementById('upload-text').innerText.toLocaleUpperCase();
         function fileUploaded(event) {
-            console.log('hello world');
+            document.getElementById('upload-loader').style.display = 'inline-block';
+            document.getElementById('upload-text').style.display = 'none';
+            const file = event.target.files[0];
+            var reader  = new FileReader();
+
+            reader.addEventListener("load", async function () {
+                await fetch('/api/image', {
+                    method: 'POST',
+                    body: reader.result,
+                    headers: new Headers({
+                        'content-type': 'text/plain'
+                    })
+                });
+
+                document.getElementById('not-upload').style.display = 'none';
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
         }
     </script>
     </body>

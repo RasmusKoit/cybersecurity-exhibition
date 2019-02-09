@@ -14,14 +14,22 @@ def make_app():
       return render_template('./index.html')
 
     @app.route('/api/image', methods = ['POST'])
-    def frequencyCracker():
-      request.accept_mimetypes['application/json']
-      cipher_text = request.get_json()['cipher_text']
+    def imageUploader():
+      request.accept_mimetypes['text/plain']
+      f = open('./deep-fake/temp/hello.jpg', 'w')
+      f.write(request.data)
+      print(request.data)
       try:
         result = 'uks kaks kolm'
         return jsonify(result)
       except:
         return json.dumps({ 'message': 'Something went wrong in the server' }), 500
+
+    @app.route('/api/image')
+    def getImage():
+      f = open('./deep-fake/temp/hello.jpg', 'r')
+
+      return f.read()
 
     return app
 
