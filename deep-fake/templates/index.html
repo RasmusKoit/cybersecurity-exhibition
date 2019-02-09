@@ -24,6 +24,7 @@ h1{
     height: 100vh;
     width: 100vw;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -101,26 +102,43 @@ h1{
     </style>
     </head>
     <body>
-        <main>
-            <div id="not-upload" class="upload">
-                <div class="file-upload">
-                    <label
-                        for="upload"
-                        class="file-upload__label"
-                    >
-                        <span id="upload-text">Upload image to apply military filters</span>
-                        <div style="display:none" id="upload-loader" class="lds-circle"><div></div></div>
-                    </label>
-                    <input id="upload" onchange="fileUploaded(event)" class="file-upload__input" type="file" name="upload">
-                </div>
+        <div id="not-hotdog" class="upload">
+            <b id="error" style="display:none; margin-bottom: 32px; color:red">Could not recognize the face</b>
+            <div class="file-upload">
+                <label
+                    for="upload"
+                    class="file-upload__label"
+                >
+                    <span id="upload-text">Upload image to apply military filters</span>
+                    <div style="display:none" id="upload-loader" class="lds-circle"><div></div></div>
+                </label>
+                <input id="upload" onchange="fileUploaded(event)" class="file-upload__input" type="file" name="upload">
             </div>
-            <img id="hello-world" src=""></img>
-        </main>
+        </div>
+        <img id="hello-world" src=""></img>
     <script>
         document.getElementById('upload-text').innerText = document.getElementById('upload-text').innerText.toLocaleUpperCase();
+
+        function setImage(base64) {
+            document.getElementById('hello-world').src = base64;
+        }
+
+        function switchImages(images) {
+            let i = 1;
+
+            const imageInterval = setInterval(() => {
+                setImage(images[i])
+                i += 1;
+                if (i === images.length) clearInterval(imageInterval);
+            }, 4000)
+            setImage(images[0])
+        }
+
+
         function fileUploaded(event) {
             document.getElementById('upload-loader').style.display = 'inline-block';
             document.getElementById('upload-text').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
             const file = event.target.files[0];
             var reader  = new FileReader();
 
@@ -133,10 +151,18 @@ h1{
                     })
                 });
 
-                const base64 = await result.text();
+                document.getElementById('not-hotdog').style.display = 'none';
+                if (result.ok) {
+                    const images = await result.json();
 
-                document.getElementById('not-upload').style.display = 'none';
-                document.getElementById('hello-world').src = base64;
+                    switchImages(images)
+                } else {
+                    document.getElementById('not-hotdog').style.display = 'flex';
+                    document.getElementById('upload-loader').style.display = 'none';
+                    document.getElementById('upload-text').style.display = 'inline-block';
+                    document.getElementById('error').style.display = 'inline-block';
+                }
+
             }, false);
 
             if (file) {
