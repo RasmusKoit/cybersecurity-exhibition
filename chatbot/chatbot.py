@@ -151,9 +151,9 @@ def response(sentence, userID='123', show_details=False):
 
             results.pop(0)
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 def make_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='/static')
 
     @app.route('/')
     def index():
