@@ -10,7 +10,7 @@ from io import BytesIO
 import base64
 import numpy
 
-model = './deep-fake/shape_predictor_68_face_landmarks.dat'
+model = './shape_predictor_68_face_landmarks.dat'
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(model)
 
@@ -35,7 +35,7 @@ def make_app():
         npimg = numpy.fromstring(base64.b64decode(request.data.split(',')[1]), dtype=numpy.uint8)
         img2 = cv2.imdecode(npimg, 1)
 
-        directory = './deep-fake/images/'
+        directory = './images/'
         images = []
         for filename in os.listdir(directory):
           img1 = cv2.imread(os.path.join(directory, filename))
@@ -55,7 +55,7 @@ def make_app():
 
     @app.route('/api/image')
     def getImage():
-      f = open('./deep-fake/temp/hello.jpg', 'r')
+      f = open('./temp/hello.jpg', 'r')
 
       return f.read()
 
