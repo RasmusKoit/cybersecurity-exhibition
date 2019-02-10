@@ -13,10 +13,10 @@ COPY . /app
 RUN export DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt install python-pip python build-essential cmake libgtk-3-dev libboost-all-dev -y
-RUN apt-get install libopencv-dev python-opencv -y
 RUN python -v
 RUN pip install pipenv
 RUN pipenv install
+RUN pipenv run python -m nltk.downloader punkt
 
 #RUN npm -v
 #RUN npm install --only=prod
@@ -24,7 +24,7 @@ RUN pipenv install
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
-
+EXPOSE 8081
 
 # Run app.py when the container launches
 CMD pipenv run python ./chatbot.py

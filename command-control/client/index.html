@@ -143,13 +143,14 @@ var _get=function t(e,i,n){null===e&&(e=Function.prototype);var s=Object.getOwnP
             fetch('/api/container').then(result => result.json()).then((data) => {
                 document.getElementById('deep-fake-stop').style.display = 'none';
                 document.getElementById('deep-fake-run').style.display = 'none';
-                document.getElementById('deep-fake-stop').style.display = 'none';
-                document.getElementById('deep-fake-run').style.display = 'none';
+                document.getElementById('chatbot-stop').style.display = 'none';
+                document.getElementById('chatbot-run').style.display = 'none';
 
                 const list = []
                 data.forEach((container) => {
+                    console.log(container);
                     if (container.includes('deep-fake')) list.push('deep-fake');
-                    if (container.includes('chatbot')) list.push('deep-fake');
+                    if (container.includes('chatbot')) list.push('chatbot');
                 })
 
                 if (list.length === 0) {

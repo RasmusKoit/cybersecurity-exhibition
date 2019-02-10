@@ -38,7 +38,10 @@ def make_app():
         directory = './images/'
         filenames = sorted(os.listdir(directory))
         images = []
-        for filename in os.listdir(directory):
+        lst = os.listdir(directory)
+        lst.sort()
+       
+        for filename in lst:
           img1 = cv2.imread(os.path.join(directory, filename))
           output1, output2 = face_swap2(img2,img1, detector, predictor)
           img = Image.fromarray(cv2.cvtColor(output1, cv2.COLOR_BGR2RGB), mode='RGB')
