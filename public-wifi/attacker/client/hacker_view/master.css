@@ -1,0 +1,58 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: arial, sans-serif;
+}
+
+
+body{
+    background: #0d1218;
+}
+
+p, li{
+    font-size: 1.4rem;
+    color: #5de651;
+}
+
+.blink{
+    color: #0d1218;
+    background: #5de651;
+
+}
+
+table{
+    /* border: 1px solid #5de651; */
+}
+
+td{
+    margin: 0;
+    padding: 0.5rem;
+    font-size: 1.4rem;
+    color: #5de651;
+    border: 1px dashed #5de651;
+}
+
+input[type="text"]{
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #5de651;
+}
+
+
+/*  Animation */
+
+.blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+@-webkit-keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
