@@ -40,7 +40,7 @@
         "responses":  ["Ära muretse, tean kus sa oled. Kas su vanemad on kodus?", "Olgu, aga kus su vanemad on kodus?"] 
      },
      {"tag": "location_pos",
-        "patterns": ["Elan","Majas", "Korteris", "Sõbra"],
+        "patterns": ["Elan","Majas", "Korteris", "Sõbra", "Eesti", "Tallinn", " "],
         "context_filter": "home",
         "context_set": "parents",
         "positive": true,
@@ -78,14 +78,14 @@
         "context_filter": "youtube",
         "context_set": "facebook",
         "positive": false,
-        "patterns": ["Ei ütle", "Sinu asi", "Ei vaja"],
+        "patterns": ["Ei ütle", "Sinu asi", "Ei vaja", "Ei ole"],
         "responses": ["Okei, võiksid endast videosid teha! Kuule, mis su Facebook on? Ma tahaks sind sõbraks lisada!"]
        },
        {"tag": "subscribe_pos",
         "context_filter": "youtube",
         "context_set": "facebook",
         "positive": true,
-        "patterns": ["On küll", "Ei ole", "Ole", "Tahaks", "Minu", " ", "On", "Jah", "Ja", "Jh", "Ikka"],
+        "patterns": ["On küll", "Ole", "Tahaks", "Minu", " ", "On", "Jah", "Ja", "Jh", "Ikka"],
         "responses": ["Okei, Subscribe'in! Kuule, mis su Facebook on? Ma tahaks sind sõbraks lisada!"]
        },
        {"tag": "facebook_neg",

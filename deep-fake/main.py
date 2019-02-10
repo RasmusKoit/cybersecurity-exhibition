@@ -44,12 +44,12 @@ def make_app():
           img = Image.fromarray(cv2.cvtColor(output1, cv2.COLOR_BGR2RGB), mode='RGB')
 
           buffer = BytesIO()
-          img.save(buffer,format="JPEG")                 
-          myimage = buffer.getvalue()  
-          
+          img.save(buffer,format="JPEG")
+          myimage = buffer.getvalue()
+
           result = 'data:image/jpg;base64,' + base64.b64encode(myimage)
           images.append(result)
-    
+
         return jsonify(images)
       except:
         return json.dumps({ 'message': 'Something went wrong in the server' }), 422

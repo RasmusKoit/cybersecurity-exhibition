@@ -1,9 +1,13 @@
 import Koa from 'koa';
 import serve from 'koa-static';
+import publicWifi from './public-wifi/victim';
+import chatbot from './chatbot/victim';
+const app = new Koa();
 import websockify from 'koa-websocket';
 import publicWifiVictim from './public-wifi/victim';
 import attackerRouter, { websocketRouter as publicWifiAttackerWebsocket } from './public-wifi/attacker';
 
+const pageName = 'CHATBOT';
 
 const app = websockify(new Koa());
 const appName = 'PUBLIC_WIFI';
@@ -14,7 +18,7 @@ switch (appName) {
     switch (subApp) {
       case 'victim':
         app.use(serve('./public-wifi/victim/client'));
-        app.use(publicWifiVictim.routes()).use(publicWifiVictim.allowedMethods());   
+        app.use(publicWifiVictim.routes()).use(publicWifiVictim.allowedMethods());
         break;
       case 'attacker':
         app.use(serve('./public-wifi/attacker/client'));
