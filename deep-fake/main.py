@@ -36,6 +36,7 @@ def make_app():
         img2 = cv2.imdecode(npimg, 1)
 
         directory = './images/'
+        filenames = sorted(os.listdir(directory))
         images = []
         for filename in os.listdir(directory):
           img1 = cv2.imread(os.path.join(directory, filename))
