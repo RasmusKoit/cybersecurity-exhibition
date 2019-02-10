@@ -113,7 +113,7 @@ def response(sentence, userID='123', show_details=False):
                         context[userID] = i['context_set']
                     else:
                         context[userID] = None
-                    return random.choice(i["responses"])
+                    return random.choice(i["responses"]), i['positive'] if 'positive' in i else False
                     
         
         for i in intents['intents']:
@@ -122,7 +122,7 @@ def response(sentence, userID='123', show_details=False):
                     context[userID] = i['context_set']
                 else:
                     context[userID] = None
-                return random.choice(i["responses"])
+                return random.choice(i["responses"]), i['positive'] if 'positive' in i else False
     
     if results:
         # loop as long as there are matches to process
@@ -144,12 +144,14 @@ def response(sentence, userID='123', show_details=False):
                         # a random response from the intent
                         if (contextValue is not None):
                             context[userID] = i['context_set']
-                        return random.choice(i['responses'])
+                        return random.choice(i['responses']), i['positive'] if 'positive' in i else False
                     
                     if (contextValue is not None):
                         context[userID] = i['context_set']
 
             results.pop(0)
+    
+    return random.choice(intents['intents'][0]['responses']), False
 
 app = Flask(__name__, static_url_path='/static')
 def make_app():
@@ -164,10 +166,11 @@ def make_app():
         print(context)
         request.accept_mimetypes['application/json']
         message = request.get_json()['message']
+        uuid = request.get_json()['uuid']
 
-        result = response(message)
+        result, positive = response(message, uuid)
 
-        return json.dumps({'response': result})
+        return json.dumps({'response': result, 'positive': positive})
     
     return app
 

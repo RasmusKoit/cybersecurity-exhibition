@@ -76,6 +76,55 @@ body, html {
     box-shadow: 0px 0px 40px 1px rgba(10,10,10,1);
 }
 
+.messenger-animation{
+    animation: fadeOut 0.75s normal forwards ease-in;
+    animation-iteration-count: 1;
+}
+
+.messenger-hide{
+    display: none;
+}
+
+@keyframes fadeOut {
+    to {
+        height: 0px;
+        opacity: 0;
+    }
+}
+
+.summary {
+    display: none;
+    min-width: 40rem;
+    max-width: 40rem;
+    height: 85%;
+    margin: 0 auto;
+    align-self: center;
+    justify-self: center;
+    text-align: center;
+}
+
+.summary > div {
+    margin-bottom: 4rem;
+}
+
+#summary-information {
+    font-size: 2rem;
+    text-align: center;
+    color: white;
+    font-weight: bolder;
+}
+
+.summary-animation {
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.typed-cursor {
+    font-size: 2.5rem;
+    color: white;
+}
+
 @media all and (max-width: 1024px) {
     .messenger {
         width: 100%;
@@ -134,8 +183,7 @@ body, html {
 }
 
 .message.local {
-    background-image: linear-gradient(to right, rgb(42, 34, 66) 50%, rgb(72, 57, 83));
-    
+    background-image: linear-gradient(to right, rgb(42, 34, 66) 30%, rgb(72, 57, 83));
 }
 
 .message.local .avatar {
@@ -143,11 +191,38 @@ body, html {
     margin-right: 4rem;
 }
 
+.overview {
+    list-style: none;
+    text-align: start;
+    color: white;
+}
+
+.overview p {
+    margin-top: 0;
+    color: #e74c3c;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.overview h4 {
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
 .message {
     display: flex;
     flex-direction: row;
     height: fit-content;
     margin-top: 1rem;
+}
+
+.answer .typed-cursor {
+    color: #e74c3c;
+}
+
+.message:last-child {
+    padding-bottom: 1rem;
 }
 
 .message .date i {
@@ -226,10 +301,6 @@ body, html {
     font-size: 1.5rem;
 }
 
-.message-box .send {
-    margin-right: 2rem;
-}
-
 textarea:focus, input:focus{
     outline: none;
 }
@@ -240,8 +311,27 @@ textarea:focus, input:focus{
 }
 
 .send-form {
+    flex: 1;
+    display: flex;
+}
+
+.send-form button {
     background: none;
     border: none;
     color: white;
     font-size: 2rem;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 20px;
+    transition: background ease-out .5s;
+}
+
+.send-form button:hover {
+    cursor: pointer;
+    background: rgb(80, 58, 96, 0.9);
 }
