@@ -10,7 +10,7 @@ from io import BytesIO
 import base64
 import numpy
 
-model = './deep-fake/shape_predictor_68_face_landmarks.dat'
+model = './shape_predictor_68_face_landmarks.dat'
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(model)
 
@@ -31,27 +31,31 @@ def make_app():
     @app.route('/api/image', methods = ['POST'])
     def imageUploader():
       request.accept_mimetypes['text/plain']
-
-      img1 = cv2.imread('./deep-fake/images/lauristin.jpg')
-      npimg = numpy.fromstring(base64.b64decode(request.data.split(',')[1]), dtype=numpy.uint8)
-      img2 = cv2.imdecode(npimg, 1)
-
-      output1, output2 = face_swap2(img2,img1, detector, predictor)
-      img = Image.fromarray(cv2.cvtColor(output1, cv2.COLOR_BGR2RGB), mode='RGB')
-
-      buffer = BytesIO()
-      img.save(buffer,format="JPEG")                 
-      myimage = buffer.getvalue()  
-      
-      result = 'data:image/jpg;base64,' + base64.b64encode(myimage)
       try:
-        return result
+        npimg = numpy.fromstring(base64.b64decode(request.data.split(',')[1]), dtype=numpy.uint8)
+        img2 = cv2.imdecode(npimg, 1)
+
+        directory = './images/'
+        images = []
+        for filename in os.listdir(directory):
+          img1 = cv2.imread(os.path.join(directory, filename))
+          output1, output2 = face_swap2(img2,img1, detector, predictor)
+          img = Image.fromarray(cv2.cvtColor(output1, cv2.COLOR_BGR2RGB), mode='RGB')
+
+          buffer = BytesIO()
+          img.save(buffer,format="JPEG")
+          myimage = buffer.getvalue()
+
+          result = 'data:image/jpg;base64,' + base64.b64encode(myimage)
+          images.append(result)
+
+        return jsonify(images)
       except:
-        return json.dumps({ 'message': 'Something went wrong in the server' }), 500
+        return json.dumps({ 'message': 'Something went wrong in the server' }), 422
 
     @app.route('/api/image')
     def getImage():
-      f = open('./deep-fake/temp/hello.jpg', 'r')
+      f = open('./temp/hello.jpg', 'r')
 
       return f.read()
 
