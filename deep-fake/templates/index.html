@@ -230,6 +230,32 @@ h1{
   -webkit-font-smoothing: antialiased;
 }
 
+.start {
+    display: none;
+    padding: 1em 2em;
+    color: #fff;
+    background: rgb(0, 0, 0);
+    border-radius: .4em;
+    transition: background .3s;
+    cursor: pointer;
+    max-width: 200px;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    right: 0;
+    font-size: 1.5rem;
+}
+
+.start-show {
+    display: block;
+}
+
     </style>
         <script>
             /*!
@@ -246,6 +272,7 @@ h1{
         </script>
     </head>
     <body>
+        <button class="start" onclick="switchImages(imgs)">START</button>
         <div class="upload">
             <b id="error" style="display:none; margin-bottom: 32px; color:red">Could not recognize the face</b>
             <div id="not-hotdog" class="file-upload">
@@ -300,6 +327,8 @@ h1{
         }
 
         function switchImages(images) {
+            document.querySelector(".start").classList.remove("start-show");
+            document.getElementById('hello-morld').style.display = 'flex';
             let i = 1;
 
             const imageInterval = setInterval(() => {
@@ -320,6 +349,7 @@ h1{
         }
 
 
+        let imgs = [];
         function fileUploaded(event) {
             document.getElementById('upload-loader').style.display = 'inline-block';
             document.getElementById('upload-text').style.display = 'none';
@@ -339,9 +369,11 @@ h1{
                 document.getElementById('not-hotdog').style.display = 'none';
                 if (result.ok) {
                     const images = await result.json();
-                    document.getElementById('hello-morld').style.display = 'flex';
 
-                    switchImages(images)
+                    //switchImages(images)
+                    imgs = images;
+
+                    document.querySelector(".start").classList.add("start-show")
                 } else {
                     document.getElementById('not-hotdog').style.display = 'flex';
                     document.getElementById('upload-loader').style.display = 'none';
