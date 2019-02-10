@@ -10,7 +10,7 @@ pylint-flask = "*"
 memory-profiler = "*"
 opencv-python = "*"
 numpy = "*"
-dlib = {file = "https://files.pythonhosted.org/packages/8b/b5/0a1f8e3cc709b845b2fb5592e0576c6194bd735519c779e6a98bf3b0f5c4/dlib-18.17.100-cp27-none-win_amd64.whl"}
+dlib = "*"
 imutils = "*"
 pillow = "*"
 
