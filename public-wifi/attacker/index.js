@@ -1,11 +1,14 @@
-
-
+import Koa from 'koa';
+import serve from 'koa-static';
+import websockify from 'koa-websocket';
 import Router from 'koa-router';
+import pcap from 'pcap';
+import querystring from 'querystring';
 
-const pcap = require('pcap');
-const querystring = require('querystring');
+const app = websockify(new Koa());
+
+const websocketRouter = new Router();
 const router = new Router();
-export const websocketRouter = new Router();
 
 websocketRouter.all('/websocket', (ctx) => {
   ctx.websocket.on('message', (message) => {
@@ -25,4 +28,9 @@ pcap_session.on('packet', function (raw_packet) {
   }
 });
 
-export default router;
+app.use(serve('./attacker/client'));
+app.use(router.routes()).use(router.allowedMethods());
+app.ws.use(websocketRouter.routes()).use(websocketRouter.allowedMethods());
+
+
+app.listen(3000);
