@@ -1,44 +1,36 @@
-window.addEventListener('keydown', result);
-// document.querySelector('#showResult').addEventListener('keydown', result);
 
 
-function startTyping(){
-    typing();
+function visualizePacket(packet) {
+    const {
+        country,
+        email,
+        first,
+        last,
+        password,
+        username,
+    } = packet;
+    const output = `
+        <br>
+        <p><b>Form submit captured</b></p>
+        <ul style="list-style-type:none;">
+            <li>Country: ${country}</li>
+            <li>First Name: ${first}</li>
+            <li>Last Name: ${last}</li>
+            <li>Display Name: ${username}</li>
+            <li>Email: ${email}</li>
+            <li>Password: ${password}</li>
+        </ul>
+        <br>
+    `;
+
+    document.querySelector('#showResult').innerHTML += output;
 }
 
+var ws = new WebSocket(`ws://${window.location.host}/websocket`);				
+ws.onopen = function() {
+    ws.onmessage = function (event) { 
+        var received_msg = event.data;
+        visualizePacket(JSON.parse(received_msg))
+    };
+};
 
-
-function result(){
-    let i = 0;
-    let fetching = 'Fetching Data...';
-
-    function typing(){
-
-        if(i<fetching.length){
-            document.querySelector('#fetching').innerHTML += fetching.charAt(i);
-            i++;
-            setTimeout(typing, 50);
-        }
-
-    }
-
-    typing();
-
-        setTimeout(function(){
-        let output = `
-            <p>C://</p>
-            <ul>
-                <li>Country: </li>
-                <li>First Name: </li>
-                <li>Last Name: </li>
-                <li>Display Name: </li>
-                <li>Email: </li>
-                <li>Password: </li>
-            </ul>
-        `;
-
-        document.querySelector('#showResult').innerHTML = output;
-
-    }, 2000);
-
-}
