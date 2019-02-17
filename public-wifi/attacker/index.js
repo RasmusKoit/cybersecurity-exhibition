@@ -9,7 +9,7 @@ const app = websockify(new Koa());
 
 const websocketRouter = new Router();
 const router = new Router();
-const pcap_session = pcap.createSession('lo', 'tcp port 3000 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)');
+const pcap_session = pcap.createSession('any', 'tcp port 3000 and (((ip[2:2] - ((ip[0]&0xf)<<2)) - ((tcp[12]&0xf0)>>2)) != 0)');
 
 
 websocketRouter.all('/websocket', (ctx) => {
