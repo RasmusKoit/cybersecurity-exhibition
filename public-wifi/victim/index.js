@@ -6,7 +6,6 @@ const app = new Koa();
 const router = new Router();
 
 router.post('/api/user', (ctx, next) => {
-  // ctx.body='hello'
   ctx.redirect('/');
 });
 
