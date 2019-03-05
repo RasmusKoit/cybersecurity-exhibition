@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <meta charset="UTF-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans');
+
+        body {
+            background-image:
+                    linear-gradient(white, #c7ecee);
+
+            font-size: 62.5%;
+            font-family: 'Merriweather Sans', sans-serif;
+        }
+
+        main{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .wrapper{
+            text-align: center;
+        }
+
+        .questions{
+            font-size: 2em;
+            width: 45em;
+        }
+
+        .container {
+            padding: 2em;
+        }
+
+        .green{
+            border-color: #A3CB38;
+            color: #A3CB38;
+        }
+
+        .red{
+            border-color: #EA2027;
+            color: #EA2027;
+        }
+
+        #close{
+            position: absolute;
+            font-size: 4em;
+            left: 92%;
+            top: 3%;
+            cursor: pointer;
+        }
+
+        div button{
+            display:inline-block;
+        }
+
+        .modalPopup{
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            width: 70em;
+            height: 45em;
+            background-color: white;
+            padding: 4rem 4rem;
+            background-color: #747d8c;
+            color:white;
+            border: 2px solid;
+            display: none;
+        }
+
+        .modal-header{
+            text-align: center;
+            display: block;
+            padding: 0;
+        }
+
+        .modal-body{
+            font-size: 2em;
+        }
+
+        /* GENERAL BUTTON STYLING */
+        button,
+        button::after {
+            -webkit-transition: all 0.3s;
+            -moz-transition: all 0.3s;
+            -o-transition: all 0.3s;
+            transition: all 0.3s;
+        }
+
+        button {
+            width: 10em;
+            background: none;
+            border: 3px solid #fff;
+            border-radius: 5px;
+            color: #fff;
+            display: block;
+            font-size: 1.6em;
+            font-weight: bold;
+            margin: 1em auto;
+            padding: 1em 2em;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        button::before,
+        button::after {
+            background: #fff;
+            content: '';
+            position: absolute;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+<select id="languagePicker" data-width="fit">
+    <option value="est" data-content='<span class="flag-icon flag-icon-us"></span> Estonia'>Estonia</option>
+    <option value="eng"  data-content='<span class="flag-icon flag-icon-mx"></span> English'>English</option>
+</select>
+<main>
+    <div class="wrapper">
+        <h3 class="title"></h3>
+        <div class="questions"></div>
+        <br />
+        <div>
+            <button id="ok" class="btn-1 green"></button>
+            <button id="no" class="btn-1 red"></button>
+        </div>
+    </div>
+    <div class="modalPopup">
+        <div class="modal-header">
+            <h3 class="modal-header-text"></h3>
+            <span id="close">X</span>
+        </div>
+        <div class="modal-body"></div>
+    </div>
+</main>
+
+
+<script>
+    const language = {
+        eng:{
+            title:"terms of conditions",
+            buttons:{
+                yes:'i agree',
+                no:'i disagree',
+            },
+            questions: [
+                'Would you agree with Google keeping the rights to your uploaded content even after you stop using their services?',
+                'Would you agree with Youtube keeping your uploaded content even after you have deleted it, provided they do not show nor share it?',
+                'Would you agree with Facebook continuing to display your deleted content on the walls of other users, who have not deleted it from their walls?',
+                'Would you agree with Twitter or Instagram sharing your data with third-parties',
+            ],
+            betrayal:[
+                {
+                    title:'Google keeps the rights on your content when you stop using it',
+                    body:'The license that you grant to Google on content you upload to their services will continue even if you stop using the services. While this makes sense for some services (e.g. Google Maps) this applies by default to all Google services. Otherwise you need to check each service for ways to remove content and for specific clauses that restrict the license in time.'
+                },
+                {
+                    title:'Deleted videos are not really deleted',
+                    body:'Youtube may retain, but not display, distribute or perform, services copies of your content that you have removed or deleted'
+                },
+                {
+                    title:'Personal data is given to third parties',
+                    body:"Your data is shared with Twitter's partners and other third-parties, on Twitter's terms – not yours.Instagram shares information with lots of third-parties, among them other instagram users (people and businesses), advertisers (only non-personally identifiable information, unless given permission), measurement partners (analytics), partners offering goods and services within instagram's products, vendors and service providers, researchers and academics as well as law enforcement."
+                },
+                {
+                    title:'Facebook collects payment information',
+                    body:'Information about transactions made on our Products. If you use our Products for purchases or other financial transactions (such as when you make a purchase in a game or make a donation), we collect information about the purchase or transaction. This includes payment information, such as your credit or debit card number and other card information; other account and authentication information; and billing, shipping and contact details.'
+                },
+            ],
+        },
+        est:{
+            title:"kasutaja tingimused",
+            buttons:{
+                yes:'nõustun',
+                no:'ei nõustu',
+            },
+            questions:[
+                'Kas oleksid nõus sellega, et Google omab õigusi sinu üles laetud sisule ka siis, kui sa nende teenuseid enam ei kasuta?',
+                'Kas oleksid nõus sellega, et Youtube jätab alles sinu üles laetud, kuid ära kustutatud video, eeldusel, et nad seda enam ei jaga ega näita?',
+                'Kas oleksid nõus sellega, et sinu Facebookis kustutatud sisu jätkab ilmumist teiste kasutajate seintel, kes ei ole seda sealt ise kustutanud?',
+                'Kas oleksid nõus sellega, et Twitter või Instagram jagab sinu andmeid kolmandate osapooltega?',
+            ],
+            betrayal:[
+                {
+                    title:'Google keeps the rights on your content when you stop using it',
+                    body:'The license that you grant to Google on content you upload to their services will continue even if you stop using the services. While this makes sense for some services (e.g. Google Maps) this applies by default to all Google services. Otherwise you need to check each service for ways to remove content and for specific clauses that restrict the license in time.'
+                },
+                {
+                    title:'Deleted videos are not really deleted',
+                    body:'Youtube may retain, but not display, distribute or perform, services copies of your content that you have removed or deleted'
+                },
+                {
+                    title:'Personal data is given to third parties',
+                    body:"Your data is shared with Twitter's partners and other third-parties, on Twitter's terms – not yours.Instagram shares information with lots of third-parties, among them other instagram users (people and businesses), advertisers (only non-personally identifiable information, unless given permission), measurement partners (analytics), partners offering goods and services within instagram's products, vendors and service providers, researchers and academics as well as law enforcement."
+                },
+                {
+                    title:'Facebook collects payment information',
+                    body:'Information about transactions made on our Products. If you use our Products for purchases or other financial transactions (such as when you make a purchase in a game or make a donation), we collect information about the purchase or transaction. This includes payment information, such as your credit or debit card number and other card information; other account and authentication information; and billing, shipping and contact details.'
+                },
+            ],
+
+        }
+    };
+
+    let questionState = 0;
+    const dropDown = document.querySelector('#languagePicker');
+    const titleDiv = document.querySelector('.title');
+    const questionDiv = document.querySelector('.questions');
+    const button1 = document.querySelector('.green');
+    const button2 = document.querySelector('.red');
+    const modal = document.querySelector('.modalPopup');
+    const modalHeader = document.querySelector('.modal-header-text');
+    const modalBody = document.querySelector('.modal-body');
+    const closeModal = document.querySelector('#close');
+    let selectedLanguage = dropDown.options[dropDown.selectedIndex].value;
+
+    const showModal = () => {
+        modal.style.display = 'block';
+    }
+
+    const hideModal = () => {
+        modal.style.display = 'none';
+    }
+
+    const showReality = () => {
+        modalHeader.innerHTML = language[selectedLanguage].betrayal[questionState - 1].title;
+        modalBody.innerHTML = language[selectedLanguage].betrayal[questionState - 1].body;
+    }
+
+    const nextSlide = () => {
+        questionDiv.innerHTML = language[selectedLanguage].questions[questionState];
+    }
+
+    const getInitData = () => {
+        titleDiv.innerHTML = language[selectedLanguage].title.toUpperCase();
+        questionDiv.innerHTML = language[selectedLanguage].questions[questionState];
+        button1.innerHTML = language[selectedLanguage].buttons.yes.toUpperCase();
+        button2.innerHTML = language[selectedLanguage].buttons.no.toUpperCase();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        getInitData()
+    });
+
+    dropDown.onchange = (e) => {
+        questionState = 0;
+        selectedLanguage = dropDown.options[dropDown.selectedIndex].value;
+        getInitData();
+    };
+
+    button1.onclick = () => {
+        questionState++;
+        nextSlide();
+        showReality();
+        showModal();
+    };
+
+    button2.onclick = () => {
+        questionState++;
+        nextSlide();
+        showReality();
+        showModal();
+    };
+
+    closeModal.onclick = () => {
+        hideModal();
+    }
+
+</script>
+
+</body>
+
+</html>
