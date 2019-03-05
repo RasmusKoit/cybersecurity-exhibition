@@ -230,6 +230,25 @@ h1{
   -webkit-font-smoothing: antialiased;
 }
 
+.button {
+    padding: 1em 2em;
+    color: #fff;
+    background: rgb(0, 0, 0);
+    border-radius: .4em;
+    transition: background .3s;
+    cursor: pointer;
+    max-width: 200px;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    right: 0;
+    position: absolute;
+}
+
+.button.previous-img {
+    left: 0;
+}
+
 .start {
     display: none;
     padding: 1em 2em;
@@ -273,6 +292,9 @@ h1{
     </head>
     <body>
         <button class="start" onclick="switchImages(imgs)">START</button>
+
+        <button class="button previous-img" style="display: none;" onclick="previousImage()">PREVIOUS</button>
+        <button class="button next-img" style="display: none;" onclick="nextImage()">NEXT</button>
         <div class="upload">
             <b id="error" style="display:none; margin-bottom: 32px; color:red">Could not recognize the face</b>
             <div id="not-hotdog" class="file-upload">
@@ -280,7 +302,7 @@ h1{
                     for="upload"
                     class="file-upload__label"
                 >
-                    <span id="upload-text">Upload image to apply awsome filters</span>
+                    <span id="upload-text">Upload image to begin</span>
                     <div style="display:none" id="upload-loader" class="lds-circle"><div></div></div>
                 </label>
                 <input id="upload" onchange="fileUploaded(event)" class="file-upload__input" type="file" name="upload">
@@ -301,7 +323,7 @@ h1{
                 </header>
         
                 <p class="PostText"></p>
-                <div style="display:flex;justify-content:center;max-width:30rem;" class="PostPic">
+                <div style="display:flex;justify-content:center;max-width:30rem; max-height:600px;" class="PostPic">
                     <img style="display: block;width: 100%;height:auto;" id="hello-world" src=""></img>
                 </div>
                 <div class="LikesComment">
@@ -322,16 +344,30 @@ h1{
 
         document.getElementById('upload-text').innerText = document.getElementById('upload-text').innerText.toLocaleUpperCase();
 
+        let imageCounter = 0;
+
         function setImage(base64) {
             document.getElementById('hello-world').src = base64;
+        }
+
+        function nextImage() {
+            if (imageCounter !== imgs.length - 1) imageCounter++;
+            setImage(imgs[imageCounter]);
+        }
+
+        function previousImage() {
+            if (imageCounter !== 0) imageCounter--;
+            setImage(imgs[imageCounter]);
         }
 
         function switchImages(images) {
             document.querySelector(".start").classList.remove("start-show");
             document.getElementById('hello-morld').style.display = 'flex';
+            document.getElementsByClassName("next-img")[0].removeAttribute("style");
+            document.getElementsByClassName("previous-img")[0].removeAttribute("style");
             let i = 1;
 
-            const imageInterval = setInterval(() => {
+           /*  const imageInterval = setInterval(() => {
                 setImage(images[i])
                 i += 1;
                 if (i === images.length) {
@@ -344,7 +380,8 @@ h1{
                         document.getElementById('likes').innerText = parseInt(document.getElementById('likes').innerText) + Math.ceil(Math.random() * 10)
                     }, 100)
                 }
-            }, 8000)
+            }, 8000) */
+            imageCounter = 0;
             setImage(images[0])
         }
 
