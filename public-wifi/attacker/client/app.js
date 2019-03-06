@@ -26,9 +26,10 @@ function visualizePacket(packet) {
     document.querySelector('#showResult').innerHTML += output;
 }
 
-var ws = new WebSocket(`ws://${window.location.host}/websocket`);				
+var ws = new WebSocket(`ws://${window.location.host}/websocket`);
 ws.onopen = function() {
-    ws.onmessage = function (event) { 
+    console.log("ws open")
+    ws.onmessage = function (event) {
         var received_msg = event.data;
         visualizePacket(JSON.parse(received_msg))
     };

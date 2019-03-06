@@ -20,7 +20,9 @@ websocketRouter.all('/websocket', (ctx) => {
     if (requestString.includes('POST /api/user HTTP/1.1')) {
       const formData = querystring.parse(requestString.split('\r\n\r\n')[1]);
 
-      ctx.websocket.send(JSON.stringify(formData));
+      ctx.websocket.send(JSON.stringify(formData), (error) => {
+        console.log("Error");
+      });
     }
   });
 });

@@ -18,6 +18,9 @@
 
   There is also a possiblity to fake the url to something like ```http://forknite```, but this requires changes in the host machine network config.
 
+  ```docker kill $(docker ps -q)``` to kill all docker running containers
+
+
 ## How to run
 
   1. ```pipenv install```
