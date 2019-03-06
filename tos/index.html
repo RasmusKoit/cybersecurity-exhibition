@@ -3,14 +3,17 @@
 <html>
 
 <head>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="bootstrap.min.css">
     <meta charset="UTF-8">
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Merriweather+Sans');
+        @import url('Merriweather.txt');
 
+        html,
+        body {
+            height: 100%;
+            min-height: 100%;
+        }
+        
         body {
             background-image:
                     linear-gradient(white, #c7ecee);
@@ -23,16 +26,44 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: 100%;
+            min-height: 100%;
         }
 
         .wrapper{
             text-align: center;
         }
 
-        .questions{
+        .results {
+            display: none;
+            height: 700px;
+            overflow-y: scroll;
+        }
+
+        .resultRow {
+            padding: 25px 0;
+        }
+
+        .resultRow div {
+            padding-bottom: 30px;
+        }
+
+        .termContainer {
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .anwserContainer {
+            font-size: 1.3em;
+            color:greenyellow;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .questions,
+        .resultRow {
             font-size: 2em;
-            width: 45em;
+            padding: 40px 100px;
         }
 
         .container {
@@ -95,7 +126,7 @@
         }
 
         button {
-            width: 10em;
+            width: 11em;
             background: none;
             border: 3px solid #fff;
             border-radius: 5px;
@@ -103,7 +134,7 @@
             display: block;
             font-size: 1.6em;
             font-weight: bold;
-            margin: 1em auto;
+            margin: 1em;
             padding: 1em 2em;
             position: relative;
             text-transform: uppercase;
@@ -134,6 +165,8 @@
             <button id="no" class="btn-1 red"></button>
         </div>
     </div>
+    <div class="results container">
+    </div>
     <div class="modalPopup">
         <div class="modal-header">
             <h3 class="modal-header-text"></h3>
@@ -157,22 +190,27 @@
                 'Would you agree with Youtube keeping your uploaded content even after you have deleted it, provided they do not show nor share it?',
                 'Would you agree with Facebook continuing to display your deleted content on the walls of other users, who have not deleted it from their walls?',
                 'Would you agree with Twitter or Instagram sharing your data with third-parties',
+                'Would you agree with Facebook collecting your credit or debit card data, when you do a purchase via their website?'
             ],
             betrayal:[
                 {
-                    title:'Google keeps the rights on your content when you stop using it',
-                    body:'The license that you grant to Google on content you upload to their services will continue even if you stop using the services. While this makes sense for some services (e.g. Google Maps) this applies by default to all Google services. Otherwise you need to check each service for ways to remove content and for specific clauses that restrict the license in time.'
+                    title:'<b>Google</b> keeps the rights on your content when you stop using it',
+                    body:'The license that you grant to <b>Google</b> on content you upload to their services will continue even if you stop using the services. While this makes sense for some services (e.g. Google Maps) this applies by default to all Google services. Otherwise you need to check each service for ways to remove content and for specific clauses that restrict the license in time.'
                 },
                 {
                     title:'Deleted videos are not really deleted',
-                    body:'Youtube may retain, but not display, distribute or perform, services copies of your content that you have removed or deleted'
+                    body:'<b>Youtube</b> may retain, but not display, distribute or perform, services copies of your content that you have removed or deleted'
+                },
+                {
+                    title:'Deleted content is not really deleted',
+                    body:'<b>Facebook</b> terms state: "In addition, content you delete may continue to appear if you have shared it with others and they have not deleted it."'
                 },
                 {
                     title:'Personal data is given to third parties',
-                    body:"Your data is shared with Twitter's partners and other third-parties, on Twitter's terms – not yours.Instagram shares information with lots of third-parties, among them other instagram users (people and businesses), advertisers (only non-personally identifiable information, unless given permission), measurement partners (analytics), partners offering goods and services within instagram's products, vendors and service providers, researchers and academics as well as law enforcement."
+                    body:"Your data is shared with <b>Twitter's</b> partners and other third-parties, on Twitter's terms – not yours. <b>Instagram</b> shares information with lots of third-parties, among them other instagram users (people and businesses), advertisers (only non-personally identifiable information, unless given permission), measurement partners (analytics), partners offering goods and services within instagram's products, vendors and service providers, researchers and academics as well as law enforcement."
                 },
                 {
-                    title:'Facebook collects payment information',
+                    title:'<b>Facebook</b> collects payment information',
                     body:'Information about transactions made on our Products. If you use our Products for purchases or other financial transactions (such as when you make a purchase in a game or make a donation), we collect information about the purchase or transaction. This includes payment information, such as your credit or debit card number and other card information; other account and authentication information; and billing, shipping and contact details.'
                 },
             ],
@@ -188,22 +226,27 @@
                 'Kas oleksid nõus sellega, et Youtube jätab alles sinu üles laetud, kuid ära kustutatud video, eeldusel, et nad seda enam ei jaga ega näita?',
                 'Kas oleksid nõus sellega, et sinu Facebookis kustutatud sisu jätkab ilmumist teiste kasutajate seintel, kes ei ole seda sealt ise kustutanud?',
                 'Kas oleksid nõus sellega, et Twitter või Instagram jagab sinu andmeid kolmandate osapooltega?',
+                'Kas oleksid nõus sellega, et Facebook kogub sinu pangakaardi andmeid, kui teostad läbi nende lehe mõne ostu?'
             ],
             betrayal:[
                 {
-                    title:'Google keeps the rights on your content when you stop using it',
-                    body:'The license that you grant to Google on content you upload to their services will continue even if you stop using the services. While this makes sense for some services (e.g. Google Maps) this applies by default to all Google services. Otherwise you need to check each service for ways to remove content and for specific clauses that restrict the license in time.'
+                    title:'<b>Google</b> keeps the rights on your content when you stop using it',
+                    body:'The license that you grant to <b>Google</b> on content you upload to their services will continue even if you stop using the services. While this makes sense for some services (e.g. Google Maps) this applies by default to all Google services. Otherwise you need to check each service for ways to remove content and for specific clauses that restrict the license in time.'
                 },
                 {
                     title:'Deleted videos are not really deleted',
-                    body:'Youtube may retain, but not display, distribute or perform, services copies of your content that you have removed or deleted'
+                    body:'<b>Youtube</b> may retain, but not display, distribute or perform, services copies of your content that you have removed or deleted'
+                },
+                {
+                    title:'Deleted content is not really deleted',
+                    body:'<b>Facebook</b> terms state: "In addition, content you delete may continue to appear if you have shared it with others and they have not deleted it."'
                 },
                 {
                     title:'Personal data is given to third parties',
-                    body:"Your data is shared with Twitter's partners and other third-parties, on Twitter's terms – not yours.Instagram shares information with lots of third-parties, among them other instagram users (people and businesses), advertisers (only non-personally identifiable information, unless given permission), measurement partners (analytics), partners offering goods and services within instagram's products, vendors and service providers, researchers and academics as well as law enforcement."
+                    body:"Your data is shared with <b>Twitter's</b> partners and other third-parties, on Twitter's terms – not yours. <b>Instagram</b> shares information with lots of third-parties, among them other instagram users (people and businesses), advertisers (only non-personally identifiable information, unless given permission), measurement partners (analytics), partners offering goods and services within instagram's products, vendors and service providers, researchers and academics as well as law enforcement."
                 },
                 {
-                    title:'Facebook collects payment information',
+                    title:'<b>Facebook</b> collects payment information',
                     body:'Information about transactions made on our Products. If you use our Products for purchases or other financial transactions (such as when you make a purchase in a game or make a donation), we collect information about the purchase or transaction. This includes payment information, such as your credit or debit card number and other card information; other account and authentication information; and billing, shipping and contact details.'
                 },
             ],
@@ -217,11 +260,18 @@
     const questionDiv = document.querySelector('.questions');
     const button1 = document.querySelector('.green');
     const button2 = document.querySelector('.red');
+    const wrapper = document.querySelector('.wrapper');
+    const results = document.querySelector('.results');
+    const termContainer = document.querySelector('.results .termContainer');
+    const anwserContainer = document.querySelector('.results .anwserContainer');
+    const usedInContainer = document.querySelector('.results .usedInContainer');
     const modal = document.querySelector('.modalPopup');
     const modalHeader = document.querySelector('.modal-header-text');
     const modalBody = document.querySelector('.modal-body');
     const closeModal = document.querySelector('#close');
     let selectedLanguage = dropDown.options[dropDown.selectedIndex].value;
+    var anwsersArray = [];
+    var questionsCount = language[selectedLanguage].questions.length;
 
     const showModal = () => {
         modal.style.display = 'block';
@@ -231,9 +281,38 @@
         modal.style.display = 'none';
     }
 
-    const showReality = () => {
-        modalHeader.innerHTML = language[selectedLanguage].betrayal[questionState - 1].title;
-        modalBody.innerHTML = language[selectedLanguage].betrayal[questionState - 1].body;
+    const hideWrapper = () => {
+        wrapper.style.display = 'none';
+    }
+
+    const showResults = () => {
+        results.style.display = "block";
+    }
+
+    const addResultRows = () => {
+        var row = '';
+
+        for(i=1; i < questionsCount+1; i++) {
+            var currentAnwser = anwsersArray[i-1];
+            var anwserColor = "";
+            if (currentAnwser == language[selectedLanguage].buttons.no.toUpperCase()) {
+                anwserColor = "red"
+            }
+            row = 
+            `<div class="resultRow row">
+                <div class="termContainer col-8">
+                    ` + language[selectedLanguage].betrayal[questionState - i].title + `
+                </div>
+                <div class="anwserContainer col-4 ` + anwserColor + `">
+                    ` + currentAnwser + `
+                </div>
+                <div class="usedInContainer col-12">
+                    ` + language[selectedLanguage].betrayal[questionState - i].body + `
+                </div>
+            </div>` + row;
+        }
+        
+        results.innerHTML = row;
     }
 
     const nextSlide = () => {
@@ -245,6 +324,17 @@
         questionDiv.innerHTML = language[selectedLanguage].questions[questionState];
         button1.innerHTML = language[selectedLanguage].buttons.yes.toUpperCase();
         button2.innerHTML = language[selectedLanguage].buttons.no.toUpperCase();
+    }
+
+    const resultsPage = () => {
+        hideModal();
+        hideWrapper();
+        showResults();
+        addResultRows();
+    }
+
+    function rememberAnwser(newAnwser){
+        anwsersArray.unshift(newAnwser);
     }
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -259,16 +349,20 @@
 
     button1.onclick = () => {
         questionState++;
+        rememberAnwser(language[selectedLanguage].buttons.yes.toUpperCase());
+        if (questionState > questionsCount-1) {
+            resultsPage();
+        }
         nextSlide();
-        showReality();
-        showModal();
     };
 
     button2.onclick = () => {
         questionState++;
+        rememberAnwser(language[selectedLanguage].buttons.no.toUpperCase());
+        if (questionState > questionsCount-1) {
+            resultsPage();
+        }
         nextSlide();
-        showReality();
-        showModal();
     };
 
     closeModal.onclick = () => {
