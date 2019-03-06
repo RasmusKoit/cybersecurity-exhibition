@@ -4,6 +4,7 @@
 
 <head>
     <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="jquery-3.3.1.min.js"></script>
     <meta charset="UTF-8">
     <style>
         @import url('Merriweather.txt');
@@ -64,6 +65,9 @@
         .resultRow {
             font-size: 2em;
             padding: 40px 100px;
+        }
+        .usedInContainer {
+            display: none;
         }
 
         .container {
@@ -186,32 +190,37 @@
                 no:'i disagree',
             },
             questions: [
-                'Would you agree with Google keeping the rights to your uploaded content even after you stop using their services?',
-                'Would you agree with Youtube keeping your uploaded content even after you have deleted it, provided they do not show nor share it?',
-                'Would you agree with Facebook continuing to display your deleted content on the walls of other users, who have not deleted it from their walls?',
-                'Would you agree with Twitter or Instagram sharing your data with third-parties',
-                'Would you agree with Facebook collecting your credit or debit card data, when you do a purchase via their website?'
+                'Would you agree with service provider keeping the rights to your uploaded content even after you stop using their services?',
+                'Would you agree with service provider sharing your name and other data with third parties?',
+                'Would you agree with service provider collecting your credit or debit card data, when you do a purchase via their website?',
+                'Would you agree with service provider owning a very broad licence to your uploaded content, including the right to publicly share and edit it?',
+                'Would you agree with the condition, that you may only use your real name and accurate data on social media?',
+                'Do you agree with Twitter gaining personal information about you even as you just look at other people’s Tweets?'
             ],
             betrayal:[
                 {
                     title:'<b>Google</b> keeps the rights on your content when you stop using it',
-                    body:'The license that you grant to <b>Google</b> on content you upload to their services will continue even if you stop using the services. While this makes sense for some services (e.g. Google Maps) this applies by default to all Google services. Otherwise you need to check each service for ways to remove content and for specific clauses that restrict the license in time.'
+                    body:'When you upload, submit, store, send or receive content to or through our Services, you give Google (and those we work with) a worldwide license to use, host, store, reproduce, modify, create derivative works (such as those resulting from translations, adaptations or other changes we make so that your content works better with our Services), communicate, publish, publicly perform, publicly display and distribute such content. The rights you grant in this license are for the limited purpose of operating, promoting, and improving our Services, and to develop new ones. This license continues even if you stop using our Services (for example, for a business listing you have added to Google Maps). Some Services may offer you ways to access and remove content that has been provided to that Service. Also, in some of our Services, there are terms or settings that narrow the scope of our use of the content submitted in those Services. Make sure you have the necessary rights to grant us this license for any content that you submit to our Services.'
                 },
                 {
-                    title:'Deleted videos are not really deleted',
-                    body:'<b>Youtube</b> may retain, but not display, distribute or perform, services copies of your content that you have removed or deleted'
-                },
-                {
-                    title:'Deleted content is not really deleted',
-                    body:'<b>Facebook</b> terms state: "In addition, content you delete may continue to appear if you have shared it with others and they have not deleted it."'
-                },
-                {
-                    title:'Personal data is given to third parties',
-                    body:"Your data is shared with <b>Twitter's</b> partners and other third-parties, on Twitter's terms – not yours. <b>Instagram</b> shares information with lots of third-parties, among them other instagram users (people and businesses), advertisers (only non-personally identifiable information, unless given permission), measurement partners (analytics), partners offering goods and services within instagram's products, vendors and service providers, researchers and academics as well as law enforcement."
+                    title:'Netflix disclose your information for certain purposes and to third parties, as described below:',
+                    body:"<b>Promotional offers:</b> We may offer joint promotions or programs that, in order for your participation, will require us to share your information with third parties. In fulfilling these types of promotions, we may share your name and other information in connection with fulfilling the incentive. Please note that these third parties are responsible for their own privacy practices."
                 },
                 {
                     title:'<b>Facebook</b> collects payment information',
                     body:'Information about transactions made on our Products. If you use our Products for purchases or other financial transactions (such as when you make a purchase in a game or make a donation), we collect information about the purchase or transaction. This includes payment information, such as your credit or debit card number and other card information; other account and authentication information; and billing, shipping and contact details.'
+                },
+                {
+                    title:'Instagram does not claim ownership of your content, but you grant us a license to use it.',
+                    body:'Nothing is changing about your rights in your content. We do not claim ownership of your content that you post on or through the Service. Instead, when you share, post, or upload content that is covered by intellectual property rights (like photos or videos) on or in connection with our Service, you hereby grant to us a non-exclusive, royalty-free, transferable, sub-licensable, worldwide license to host, use, distribute, modify, run, copy, publicly perform or display, translate, and create derivative works of your content (consistent with your privacy and application settings). You can end this license anytime by deleting your content or account. However, content will continue to appear if you shared it with others and they have not deleted it.'
+                },
+                {
+                    title:'You can only use real personal data on Facebook',
+                    body:'When people stand behind their opinions and actions, our community is safer and more accountable. For this reason, you must:<ul><li>Use the same name that you use in everyday life.</li> <li>Provide accurate information about yourself.</li><li>Create only one account (your own) and use your timeline for personal purposes.<li>Not share your password, give access to your Facebook account to others or transfer your account to anyone else (without our permission).</li></ul>'
+                },
+                {
+                    title:'When you use Twitter, even if you’re just looking at Tweets, we receive some personal information from you like the type of device you’re using and your IP address.',
+                    body:''
                 },
             ],
         },
@@ -222,32 +231,37 @@
                 no:'ei nõustu',
             },
             questions:[
-                'Kas oleksid nõus sellega, et Google omab õigusi sinu üles laetud sisule ka siis, kui sa nende teenuseid enam ei kasuta?',
-                'Kas oleksid nõus sellega, et Youtube jätab alles sinu üles laetud, kuid ära kustutatud video, eeldusel, et nad seda enam ei jaga ega näita?',
-                'Kas oleksid nõus sellega, et sinu Facebookis kustutatud sisu jätkab ilmumist teiste kasutajate seintel, kes ei ole seda sealt ise kustutanud?',
-                'Kas oleksid nõus sellega, et Twitter või Instagram jagab sinu andmeid kolmandate osapooltega?',
-                'Kas oleksid nõus sellega, et Facebook kogub sinu pangakaardi andmeid, kui teostad läbi nende lehe mõne ostu?'
+                'Kas oleksid nõus sellega, et teenusepakkuja omab õigusi sinu üles laetud sisule ka siis, kui sa nende teenuseid enam ei kasuta?',
+                'Kas oleksid nõus sellega, et teenusepakkuja jagab sinu nime ja muid andmeid kolmandate osapooltega?',
+                'Kas oleksid nõus sellega, et teenusepakkuja kogub sinu pangakaardi andmeid, kui teostad läbi nende lehe mõne ostu?',
+                'Kas oleksid nõus sellega, et teenusepakkuja omab väga laia litsentsi teie üles laetud sisule, seal hulgas õigust seda avalikult levitada ja muuta?',
+                'Kas oleksid nõus sellega, et võid sotsiaalmeedias kasutada ainult oma päris nime ja tõeseid andmeid?',
+                'Kas olete nõus sellega, et lihtsalt teiste inimeste Tweete vaadates saab Twitter teie kohta isiklikke andmeid?'
             ],
             betrayal:[
                 {
-                    title:'<b>Google</b> keeps the rights on your content when you stop using it',
-                    body:'The license that you grant to <b>Google</b> on content you upload to their services will continue even if you stop using the services. While this makes sense for some services (e.g. Google Maps) this applies by default to all Google services. Otherwise you need to check each service for ways to remove content and for specific clauses that restrict the license in time.'
+                    title:'<b>Googlesse</b> jäävad õigused sinu teabele kui sa lõpetad Googlei kasutamist',
+                    body:'Kui laadite üles, esitate, salvestate, saadate või võtate vastu teabesisu meie teenustes või teenuste kaudu, annate Google’ile (ja meie koostööpartneritele) ülemaailmse litsentsi kasutada, hostida, salvestada, taastoota, muuta, luua tuletatud teoseid (nt tõlkimisest, kohandamisest või teistest meie tehtud muudatustest, mis on tingitud vajadusest muuta teie teabesisu meie teenustega paremini sobivaks), edasi anda, avaldada, avalikult esitada, avalikult kuvada ja levitada niisugust teabesisu. Selle litsentsiga teie antud õigused kehtivad piiratud eesmärgil, et teenindada, reklaamida ja parandada meie teenuseid ning arendada uusi. Litsents kehtib ka pärast seda, kui peatate meie teenuste (nt Google Mapsi lisatud ärikataloogi kirje) kasutamise. Mõned teenused pakuvad võimalusi meie teenustes pakutavale teabesisule juurdepääsu omamiseks ja selle eemaldamiseks. Lisaks on mõnes teenuses tingimused või seaded, mis piiravad nendesse teenustesse saadetud teabesisu kasutamise ulatust. Veenduge, et teil oleks vajalikud õigused meile selle litsentsi andmiseks iga teabesisu kohta, mille olete meie teenustele esitanud.'
                 },
                 {
-                    title:'Deleted videos are not really deleted',
-                    body:'<b>Youtube</b> may retain, but not display, distribute or perform, services copies of your content that you have removed or deleted'
+                    title:'Netflix jagab sinu informatsiooni teatud eesmärkidel ning kolmandatele osapooltele, näiteks alljärgneval viisil:',
+                    body:"<b>Kampaania pakkumised:</b>  Võime pakkuda pakkumisi või programme, milles osalemiseks peame sinu infot jagama kolmandate osapooltega. Neid pakkumisi täide viies võime jagada sinu nime ja muud informatsiooni, et pakkumist täide viia. Palun pange tähele, et need kolmandad osapooled on vastutavad oma enda privaatsuspoliitika eest ise."
                 },
                 {
-                    title:'Deleted content is not really deleted',
-                    body:'<b>Facebook</b> terms state: "In addition, content you delete may continue to appear if you have shared it with others and they have not deleted it."'
+                    title:'<b>Facebook</b> kogub maksetehingute infot',
+                    body:'Kui kasutate meie tooteid ostude või muude rahaliste tehingute tegemiseks (näiteks kui ostate mingis mängus midagi või annetate), kogume teavet selle ostu või tehingu kohta. See hõlmab makseteavet, näiteks teie krediit- või deebetkaardi number ning muu kaarditeave, aga ka muu kontot ja autentimist puudutav teave ning arveldus-, tarne- ja kontaktandmed.'
                 },
                 {
-                    title:'Personal data is given to third parties',
-                    body:"Your data is shared with <b>Twitter's</b> partners and other third-parties, on Twitter's terms – not yours. <b>Instagram</b> shares information with lots of third-parties, among them other instagram users (people and businesses), advertisers (only non-personally identifiable information, unless given permission), measurement partners (analytics), partners offering goods and services within instagram's products, vendors and service providers, researchers and academics as well as law enforcement."
+                    title:'Instagram ei nõua omandiõigust teie sisule, kuid annate neile selle kasutamiseks litsentsi',
+                    body:'Teie sisuga seotud õigustes ei muutu midagi. Me ei nõua omandiõigust teie sisule, mida Teenuses või Teenuse kaudu postitate. Selle asemel, kui jagate, postitate või laadite üles meie Teenuses või sellega seoses sisu, millele kehtivad intellektuaalomandi õigused (nt fotod või videod), annate meile seega kasutustasuta, üleantava, all-litsentsitava, ülemaailmse lihtlitsentsi teie sisu majutamiseks, kasutamiseks, levitamiseks, muutmiseks, käitamiseks, kopeerimiseks, avalikult esitamiseks või kuvamiseks, tõlkimiseks ning sellest tuletatud teoste loomiseks (teie privaatsus- ja rakendusseadete alusel). Saate selle litsentsi igal ajal lõpetada, kustutades oma sisu või konto. Sellegipoolest jätkab sisu ilmumist, kui olete seda teistega jaganud ja nemad ei ole seda ära kustutanud.'
                 },
                 {
-                    title:'<b>Facebook</b> collects payment information',
-                    body:'Information about transactions made on our Products. If you use our Products for purchases or other financial transactions (such as when you make a purchase in a game or make a donation), we collect information about the purchase or transaction. This includes payment information, such as your credit or debit card number and other card information; other account and authentication information; and billing, shipping and contact details.'
+                    title:'Facebookis võid kasutada ainult oma päris nime ja tõeseid andmeid',
+                    body:'Meie kogukond turvalisem ja vastutustundlikum, kui inimesed vastutavad oma arvamuste ja tegude eest. Seetõttu peate:<ul><li>Kasutama sama nime, mida kasutate igapäevaelus.</li><li>Esitama enda kohta tõeseid andmeid.</li><li>looma ainult ühe konto (teie enda oma) ja kasutama oma ajajoont isiklikuks otstarbeks.</li><li>vältima oma parooli teistega jagamist, teistele oma Facebooki kontole juurdepääsu võimaldamist ja konto üleandmist teistele isikutele (meie loata).</li></ul>'
+                },
+                {
+                    title:'Twitterit kasutades saab Twitter teie kohta mõningast isiklikku informatsiooni, nagu teie seadme tüüp ning IP aadress.',
+                    body:''
                 },
             ],
 
@@ -299,8 +313,8 @@
                 anwserColor = "red"
             }
             row = 
-            `<div class="resultRow row">
-                <div class="termContainer col-8">
+            `<div class="resultRow row info-row`+ i +`">
+                <div class="termContainer col-8" onclick='toggleDesc(`+i+`)'>
                     ` + language[selectedLanguage].betrayal[questionState - i].title + `
                 </div>
                 <div class="anwserContainer col-4 ` + anwserColor + `">
@@ -367,6 +381,16 @@
 
     closeModal.onclick = () => {
         hideModal();
+    }
+
+    function toggleDesc(index) {
+        var selector = ".info-row" + index + " .usedInContainer";
+
+        if($(selector).is(":visible")){
+            $(selector).hide(1500);
+        } else {
+            $(selector).show(1000);
+        }
     }
 
 </script>
