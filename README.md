@@ -30,3 +30,7 @@
   3. open *localhost:8080* on latest Google Chrome
 
   4. Profit?
+
+
+## Build everything
+
