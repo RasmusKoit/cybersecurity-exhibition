@@ -1,6 +1,6 @@
 
 import json
-from flask import Flask, render_template, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template_string, send_from_directory
 from utils import face_swap2
 from PIL import Image
 import dlib
@@ -18,15 +18,19 @@ def stringToImage(base64_string):
     imgdata = base64.b64decode(base64_string)
     return Image.open(BytesIO(imgdata))
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="fakebook/build")
 
 def make_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="fakebook/build/")
 
-    @app.route('/')
-    def index():
-      print(render_template_string('./card.html'))
-      return render_template('./index.html')
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def index(path):
+      if path != "" and os.path.exists(app.static_folder + path):
+        print(app.static_folder, path)
+        return send_from_directory(app.static_folder, path)
+      else:
+          return send_from_directory(app.static_folder, 'index.html')
 
     @app.route('/api/image', methods = ['POST'])
     def imageUploader():
@@ -68,4 +72,4 @@ def make_app():
 
 if __name__ == '__main__':
   app = make_app()
-  app.run('0.0.0.0', port=8080)
+  app.run('0.0.0.0', port=8000)
