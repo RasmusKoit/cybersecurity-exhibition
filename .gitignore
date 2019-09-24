@@ -1,3 +1,5 @@
 node_modules
 
 /deep-fake/temp
+
+.env
