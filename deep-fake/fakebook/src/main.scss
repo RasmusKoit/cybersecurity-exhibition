@@ -1,0 +1,129 @@
+@import "fonts/fonts.scss";
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Roboto, sans-serif;
+    color: #0583F2;
+}
+h1,h2,h3,h4, p {
+    padding: 0;
+    margin: 0;
+}
+.btn {
+    border: none;
+    background: transparent;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+.btn-primary {
+    background-color: #0583F2;
+    color: #ffffff;
+    box-shadow: 2px 3px 5px rgba(93, 102, 109, .7);
+    font-size: 18px;
+    &:hover {
+        background-color: #0554F2;
+    }
+}
+.container {
+    .header {
+        display: flex;
+        width: 100%;
+        h2 {
+            font-size: 48px;
+            padding: 30px 25px;
+        }
+    }
+    .content {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+.c-upload-image {
+    height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    .file-input {
+        display: none;
+    }
+}
+.c-feed {
+    background-color: #B4B9BF;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    .btn-primary {
+        margin: 20px 0;
+    }
+}
+
+.c-feed-card {
+    background-color: #ffffff;
+    box-shadow: 3px 5px 8px rgba(93, 102, 109, .5);
+    margin: 10px 3px;
+    padding: 10px;
+    width: 100%;
+    .feed-head {
+        display: flex;
+        justify-content: flex-start;
+        img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+        .post-details {
+            margin-left: 20px;
+            padding: 30px 0;
+            .name {
+                color: #272727;
+                font-weight: 700;
+                font-size: 34px;
+            }
+            .location {
+                font-size: 18px;
+                color: #a3a3a3;
+            }
+        }
+    }
+    .desc {
+        color: #272727;
+        font-size: 24px;
+        padding: 20px 15px;
+    }
+    img {
+        width: 100%;
+        object-fit: cover;
+    }
+    .footer {
+        .social-stats {
+            display: flex;
+            justify-content: flex-end;
+            color: #272727;
+            font-size: 1.5rem;
+            padding: 10px 0;
+            .likes {
+                margin-right: auto;
+            }
+        }
+        .social-buttons {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid lightgray;
+            margin-top: 10px;
+            .btn {
+                color: #272727;
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
