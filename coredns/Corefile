@@ -1,0 +1,31 @@
+.:53 {
+    forward . 8.8.8.8 9.9.9.9
+    log
+    errors
+}
+
+fortnite.com:53 {
+    file /root/fortnite.db
+    log
+    errors
+}
+
+forthacker.com:53 {
+    file /root/forthacker.db
+    log
+    errors
+}
+
+deepfake.kv:53 {
+    file /root/deepfake.db
+    log
+    errors
+}
+
+chatbot.kv:53 {
+    file /root/chatbot.db
+    log
+    errors
+}
+
+

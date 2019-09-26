@@ -1,0 +1,3 @@
+deepfake.kv.        IN  SOA dns.deepfake.kv. rasmuskoit.deepfake.kv. 2019092401 7200 3600 1209600 3600
+dns.deepfake.kv.    IN  A   192.168.8.101
+deepfake.kv.    IN  A   192.168.8.101

@@ -1,28 +1,5 @@
-version: '3.3'
+version: '3.4'
 services:
-  chatbot:
-    build:
-      context: ./chatbot/
-    ports:
-      - "8080:8080"
-      - "8081:8081"
-  deepfake:
-    build:
-      context: ./deep-fake/
-    ports: 
-      - "8082:8080"
-  publicwifiattacker:
-    build:
-      context: ./public-wifi/
-      dockerfile: Dockerfile.attacker
-    ports:
-      - "3001:3001"
-  publicwifivictim:
-    build:
-      context: ./public-wifi/
-      dockerfile: Dockerfile.victim
-    ports: 
-      - "84:3000"
   nginxproxy:
     container_name: nginxProxy
     build:
@@ -32,4 +9,25 @@ services:
       - "443:443"
     volumes: 
       - ./sites/:/var/www/
-      - ./proxy/:/etc/nginx/conf.d/:ro
+      - ./nginxProxy/proxy/:/etc/nginx/conf.d/:ro
+  coredns:
+    container_name: coredns
+    image: coredns/coredns
+    command: -conf /root/Corefile 
+    ports:
+      - "192.168.8.101:53:53/udp"
+      - "192.168.8.101:53:53"
+    volumes:
+      - ./coredns/:/root/
+  chatbot:
+    build:
+      context: ./chatbot/
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+  deepfake:
+    build:
+      context: ./deep-fake/
+    ports:
+      - "8082:8000"
+

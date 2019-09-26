@@ -1,0 +1,3 @@
+chatbot.kv.        IN  SOA dns.chatbot.com. rasmuskoit.chatbot.kv. 2019092401 7200 3600 1209600 3600
+dns.chatbot.kv.    IN  A   192.168.8.101
+chatbot.kv.    IN  A   192.168.8.101
